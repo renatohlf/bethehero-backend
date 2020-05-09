@@ -8,13 +8,11 @@ const IncidentSchema = new mongoose.Schema({
         required: true,
     },
     description: {
-        type: String,
-        lowercase: true       
+        type: String   
     },
     value: {
-        type: String,
-        required: true,
-        select: false
+        type: Number,
+        required: true
     },
     ong: {
         type: Schema.Types.ObjectId,

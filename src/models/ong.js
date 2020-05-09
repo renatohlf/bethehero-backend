@@ -20,7 +20,7 @@ const OngSchema = new mongoose.Schema({
         select: false
     },
     whatsapp: {
-        type: Number,
+        type: String,
         required: true,
     },
     city: {
