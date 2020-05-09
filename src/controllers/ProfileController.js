@@ -1,22 +1,19 @@
-const connection = require('../database/connection');
+const Incident = require('../models/incident');
 
 module.exports = {
-    async profile(request, response) {
+    async ongIncidents(request, response) {
         const { page = 1 } = request.query;
         const limit = 6;
-        const ong_id = request.headers.authorization;
-        
-        const incidents = await connection('incidents')
-        .where('ong_id', ong_id)
-        .limit(limit)
-        .offset((page - 1) * limit)
-        .select('*');
+        const ong_id = request.userId;
 
-        const [count] = await connection('incidents')
-        .where('ong_id', ong_id).count();
+        const incidents = await Incident.find({ ong: ong_id })
+            .skip((page - 1) * limit)
+            .limit(limit);
+
+        const count = await Incident.find({ ong: ong_id }).countDocuments();
 
         return response.json({
-            total: count['count(*)'],
+            total: count,
             limit: limit,
             results: incidents
         });
