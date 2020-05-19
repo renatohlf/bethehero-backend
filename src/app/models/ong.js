@@ -1,9 +1,9 @@
-const mongoose = require('../database/index');
+const mongoose = require('../../database/index');
 const bcrypt = require('bcryptjs');
 
 const Schema = mongoose.Schema;
 
-const OngSchema = new mongoose.Schema({
+const OngSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -21,7 +21,6 @@ const OngSchema = new mongoose.Schema({
     },
     whatsapp: {
         type: String,
-        required: true,
     },
     city: {
         type: String,
@@ -32,6 +31,14 @@ const OngSchema = new mongoose.Schema({
         required: true,
         uppercase: true,
         maxlength: 2,
+    },
+    passwordResetToken: {
+        type: String,
+        select: false
+    },
+    passwordResetExpires: {
+        type: Date,
+        select: false
     },
     createdAt: {
         type: Date,
