@@ -1,14 +1,8 @@
 const Ong = require('../models/ong');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const mailer = require('../../modules/mailer');
-const { sendMail } = require('../helpers/utils');
+const { sendMail, generateToken } = require('../helpers/utils');
 
-
-function generateToken(params = {}) {
-    return jwt.sign(params, process.env.SECRET, { expiresIn: 86400 });
-}
 module.exports = { 
     async register(request, response){
         const { name, email, whatsapp, password, city, uf } = request.body;

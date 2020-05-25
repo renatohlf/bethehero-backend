@@ -1,4 +1,5 @@
 const mailer = require('../../modules/mailer');
+const jwt = require('jsonwebtoken');
 
 function sendMail({to, template, context}){
     mailer.sendMail({
@@ -15,4 +16,8 @@ function sendMail({to, template, context}){
     return Promise.resolve();
 }
 
-module.exports = { sendMail }
+function generateToken(params = {}) {
+    return jwt.sign(params, process.env.SECRET, { expiresIn: 86400 });
+}
+
+module.exports = { sendMail, generateToken }
