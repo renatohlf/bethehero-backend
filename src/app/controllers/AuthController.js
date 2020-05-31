@@ -47,14 +47,12 @@ module.exports = {
                 session.endSession();
                 return response.send();
             }).catch(async (err) => {
-                
                 await session.abortTransaction();
                 session.endSession();
                 return response.status(400).send({ error: 'Error sending email, try again later...'});
             });
            
         } catch(err) {
-            
             await session.abortTransaction();
             session.endSession();
             return response.status(400).json({ error: 'Registration Failed'});
@@ -78,7 +76,9 @@ module.exports = {
 
         const token = generateToken({ id: user.id });
 
-        return res.send({ user, token });
+        const ong = await Ong.findOne({ user: user.id });
+
+        return res.send({ userId: user.id, ong, token });
     },
     async lostPassword(req, res) {
         const { email } = req.body;
@@ -109,7 +109,6 @@ module.exports = {
             }).then(() => {
                 return res.send();
             }).catch(err => {
-                console.log(err);
                 return res.status(400).send({ error: 'Error sending email, try again later...'});
             }); 
 
