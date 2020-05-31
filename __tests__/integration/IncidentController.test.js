@@ -1,4 +1,5 @@
 const Ong = require('../../src/app/models/ong');
+const User = require('../../src/app/models/user');
 const Incident = require('../../src/app/models/incident');
 const { generateToken } = require('../../src/app/helpers/utils');
 const supertest = require('supertest');
@@ -12,24 +13,32 @@ setupDB('bethehero-test');
     Note that there is not imports for "mockingoose" 
     If you need to test endpoints with mocked data, then import mockingoose.
     const mockingoose = require('mockingoose').default;
-    Check auth.test.js to see how it works, or check it out in the documentation of mockingoose
+    Check it out in the documentation of mockingoose
  */
 
 describe('Test incidentController', () => {
 
     it('Should create an incident', async () => {
-        
+        const user = { 
+            firstName: 'Test',
+            lastName: 'User',
+            email: 'test@test.com',
+            whatsapp: '',
+            password: '12345'
+        };
+
+        const createdUser = await User.create(user);        
+
         const ong = { 
             name: 'TEST_ONG', 
-            email: 'test@ong.com', 
-            password: '12345',
             whatsapp: '', 
             city: 'Recife', 
-            uf: 'PE'
+            uf: 'PE',
+            user: createdUser.id
         };
 
         const createdOng = await Ong.create(ong);   
-        const token = generateToken({ id: createdOng.id });
+        const token = generateToken({ id: createdUser.id });
 
         const response = await request.post('/incidents').send({
             "title": "Test Incident",
@@ -48,17 +57,26 @@ describe('Test incidentController', () => {
 
 
     it('Should list incidents', async () => {
+        const user = { 
+            firstName: 'Test',
+            lastName: 'User',
+            email: 'test@test.com',
+            whatsapp: '',
+            password: '12345'
+        };
+
+        const createdUser = await User.create(user);        
+
         const ong = { 
             name: 'TEST_ONG', 
-            email: 'test@ong.com', 
-            password: '12345',
             whatsapp: '', 
             city: 'Recife', 
-            uf: 'PE'
+            uf: 'PE',
+            user: createdUser.id
         };
-    
+
         const createdOng = await Ong.create(ong);   
-        const token = generateToken({ id: createdOng.id });
+        const token = generateToken({ id: createdUser.id });
     
         await request.post('/incidents').send({
             "title": "Test Incident",
@@ -85,17 +103,26 @@ describe('Test incidentController', () => {
 
     it('Should delete an incident', async () => {
 
+        const user = { 
+            firstName: 'Test',
+            lastName: 'User',
+            email: 'test@test.com',
+            whatsapp: '',
+            password: '12345'
+        };
+
+        const createdUser = await User.create(user);        
+
         const ong = { 
             name: 'TEST_ONG', 
-            email: 'test@ong.com', 
-            password: '12345',
             whatsapp: '', 
             city: 'Recife', 
-            uf: 'PE'
+            uf: 'PE',
+            user: createdUser.id
         };
 
         const createdOng = await Ong.create(ong);   
-        const token = generateToken({ id: createdOng.id });
+        const token = generateToken({ id: createdUser.id });
         
         const incidentsResponse = await request.post('/incidents').send({
             "title": "Test Incident",

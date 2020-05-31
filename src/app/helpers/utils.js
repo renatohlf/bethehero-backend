@@ -1,10 +1,11 @@
 const mailer = require('../../modules/mailer');
 const jwt = require('jsonwebtoken');
 
-function sendMail({to, template, context}){
+function sendMail({to, template, subject, context}){
     mailer.sendMail({
         from: 'noreply@bethehero.com',
         to,
+        subject,
         template,
         context
     }, err => {

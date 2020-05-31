@@ -8,17 +8,17 @@ const OngSchema = new Schema({
         type: String,
         required: true,
     },
-    email: {
-        type: String,
-        unique: true,
-        required: true,
-        lowercase: true       
-    },
-    password: {
-        type: String,
-        required: true,
-        select: false
-    },
+    // email: {
+    //     type: String,
+    //     unique: true,
+    //     required: true,
+    //     lowercase: true       
+    // },
+    // password: {
+    //     type: String,
+    //     required: true,
+    //     select: false
+    // },
     whatsapp: {
         type: String,
     },
@@ -32,14 +32,19 @@ const OngSchema = new Schema({
         uppercase: true,
         maxlength: 2,
     },
-    passwordResetToken: {
-        type: String,
-        select: false
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+        required: true
     },
-    passwordResetExpires: {
-        type: Date,
-        select: false
-    },
+    // passwordResetToken: {
+    //     type: String,
+    //     select: false
+    // },
+    // passwordResetExpires: {
+    //     type: Date,
+    //     select: false
+    // },
     createdAt: {
         type: Date,
         default: Date.now,
@@ -47,12 +52,12 @@ const OngSchema = new Schema({
     
 });
 
-OngSchema.pre('save', async function(next) {
-    const hash = await bcrypt.hash(this.password, 10);
-    this.password = hash;
+// OngSchema.pre('save', async function(next) {
+//     const hash = await bcrypt.hash(this.password, 10);
+//     this.password = hash;
 
-    next();
-});
+//     next();
+// });
 
 const Ong = mongoose.model('ong', OngSchema);
 

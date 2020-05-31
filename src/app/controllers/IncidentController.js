@@ -1,4 +1,5 @@
 const Incident = require('../models/incident');
+const Ong = require('../models/ong');
 
 module.exports = { 
     async listIncidents(request, response) {
@@ -21,18 +22,19 @@ module.exports = {
     },
     async create(request, response) {
         const { title, description, value } = request.body;
-        const ong_id = request.userId;
+        const userId = request.userId;
         
         try {
+            const ong = await Ong.findOne({ user: userId });
+
             const incident = await Incident.create({ 
-                ong: ong_id,
+                ong: ong.id,
                 title, 
                 description, 
                 value
             });
             return response.json({ incident });
         } catch(err){
-            console.log(err);
             return response.status(400).json({ error: 'Operation not possible' });
         }
         
@@ -40,7 +42,9 @@ module.exports = {
     },
     async delete(request, response) {
         const { id } = request.params;
-        const ong_id = request.userId;
+        const userId = request.userId;
+
+        const ong = await Ong.findOne({ user: userId });
 
         const incident = await Incident.findById({ _id: id }).populate('ong_id');
         
@@ -48,7 +52,7 @@ module.exports = {
             return response.status(404).json({ error: 'Incident not found' });
         }
 
-        if(incident.ong.toString() !== ong_id) {
+        if(incident.ong.toString() !== ong.id) {
             return response.status(401).json({ error: 'Operation not authorized' });
         }
 
