@@ -10,7 +10,7 @@ export function sendMail({to, template, subject, context}){
         context
     }, err => {
         if(err) {
-            return Promise.reject({ err });
+            return Promise.reject(err);
         }
         return Promise.resolve();
     });
