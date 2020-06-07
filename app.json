@@ -1,0 +1,16 @@
+{
+    "name": "Be the hero",
+    "description": "",
+    "buildpacks": [
+      {
+        "url": "heroku/nodejs"
+      }
+    ],
+    "environments": {
+      "test": {
+        "scripts": {
+          "test": "NPM_CONFIG_PRODUCTION=false yarn test"
+        }
+      }
+    }
+  }
