@@ -15,12 +15,13 @@ routes.post('/lost_password', AuthController.lostPassword);
 routes.post('/reset_password', AuthController.resetPassword);
 
 routes.get('/ongs', OngController.listOngs);
-//routes.post('/ongs', OngController.create);
+routes.get('/ong', authenticated, OngController.getOng);
 
 routes.get('/profile', authenticated, ProfileController.ongIncidents);
+routes.patch('/profile/edit', authenticated, ProfileController.editProfile);
 
 routes.get('/incidents', IncidentsController.listIncidents);
 routes.post('/incidents', authenticated, IncidentsController.create);
-routes.delete('/incidents/:id',authenticated,IncidentsController.delete);
+routes.delete('/incidents/:id',authenticated,IncidentsController.deleteIncident);
 
 export default routes;
