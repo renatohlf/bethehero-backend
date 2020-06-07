@@ -1,18 +1,12 @@
-const Ong = require('../../src/app/models/ong');
-const User = require('../../src/app/models/user');
-const supertest = require('supertest');
-const app = require('../../src/server');
+import Ong from '../../src/app/models/ong.js';
+import User from '../../src/app/models/user.js';
+import supertest from 'supertest';
+import app from '../../src/server.js';
 const request = supertest(app);
-const { setupDB } = require('../test-setup');
+import { setupDB } from '../test-setup.js';
 
-setupDB('bethehero-test');
+setupDB();
 
-/*  In this test suit, we are using real data to test the endpoints.
-    Note that there is not imports for "mockingoose" 
-    If you need to test endpoints with mocked data, then import mockingoose.
-    const mockingoose = require('mockingoose').default;
-    Check it out in the documentation of mockingoose
- */
 describe('Sign in', () => {
     it('Should register an user', async () => {
         const response = await request.post('/register').send({

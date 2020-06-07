@@ -1,10 +1,12 @@
-const dotenv = require('dotenv').config({
+import dotenv from 'dotenv';
+
+dotenv.config({
     path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
 });
-const express = require('express');
-const routes = require('./routes');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+import express from 'express';
+import routes from './routes.js';
+import cors from 'cors';
+import bodyParser from 'body-parser';
 
 const app = express();
 
@@ -16,4 +18,4 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(routes);
 
-module.exports = app;
+export default app;

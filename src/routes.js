@@ -1,10 +1,10 @@
-const express = require('express');
+import express from 'express';
 
-const OngController = require('./app/controllers/OngController');
-const IncidentsController = require('./app/controllers/IncidentController');
-const ProfileController = require('./app/controllers/ProfileController');
-const AuthController = require('./app/controllers/AuthController');
-const authenticated = require('./app/middlewares/authMiddleware');
+import OngController from './app/controllers/OngController.js';
+import IncidentsController from './app/controllers/IncidentController.js';
+import ProfileController from './app/controllers/ProfileController.js';
+import AuthController from './app/controllers/AuthController.js';
+import authenticated from './app/middlewares/authMiddleware.js';
 
 const routes = express.Router();
 
@@ -23,4 +23,4 @@ routes.get('/incidents', IncidentsController.listIncidents);
 routes.post('/incidents', authenticated, IncidentsController.create);
 routes.delete('/incidents/:id',authenticated,IncidentsController.delete);
 
-module.exports = routes;
+export default routes;

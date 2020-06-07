@@ -1,20 +1,13 @@
-const Ong = require('../../src/app/models/ong');
-const User = require('../../src/app/models/user');
-const Incident = require('../../src/app/models/incident');
-const { generateToken } = require('../../src/app/helpers/utils');
-const supertest = require('supertest');
-const app = require('../../src/server');
+import Ong from '../../src/app/models/ong.js';
+import User from '../../src/app/models/user.js';
+import Incident from '../../src/app/models/incident.js';
+import { generateToken } from '../../src/app/helpers/utils.js';
+import supertest from 'supertest';
+import app from '../../src/server.js';
 const request = supertest(app);
-const { setupDB } = require('../test-setup');
+import { setupDB } from '../test-setup.js';
 
-setupDB('bethehero-test');
-
-/*  In this test suit, we are using real data to test the endpoints.
-    Note that there is not imports for "mockingoose" 
-    If you need to test endpoints with mocked data, then import mockingoose.
-    const mockingoose = require('mockingoose').default;
-    Check it out in the documentation of mockingoose
- */
+setupDB();
 
 describe('Test incidentController', () => {
 
@@ -47,10 +40,10 @@ describe('Test incidentController', () => {
             "ong": createdOng.id
         }).set('Authorization', token);
 
-        
-        const incident = await Incident.findOne({ _id: response.body.incident._id });
-    
         expect(response.status).toBe(200);
+
+        const incident = await Incident.findOne({ _id: response.body.incident._id });
+
         expect(incident.ong).not.toBe('');
     });
 
@@ -131,7 +124,6 @@ describe('Test incidentController', () => {
             "ong": createdOng.id
         }).set('Authorization', token);
 
-        
         const incident = await Incident.findOne({ _id: incidentsResponse.body.incident._id });
 
         const response = await request.delete('/incidents/'+incident.id).set('Authorization', token);

@@ -3,16 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "NODE_ENV=dev nodemon src/index.js --ignore __tests__",
     "start": "NODE_ENV=production node src/index.js",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest --runInBand --detectOpenHandles --forceExit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/jest": "^25.2.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -26,9 +26,13 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.10.2",
+    "@shelf/jest-mongodb": "^1.1.5",
+    "@types/jest": "^25.2.3",
+    "babel-jest": "^26.0.1",
     "jest": "^26.0.1",
     "mockingoose": "^2.13.2",
-    "nodemon": "^2.0.2",
+    "nodemon": "^2.0.4",
     "supertest": "^4.0.2"
   }
 }

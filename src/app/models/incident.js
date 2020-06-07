@@ -1,4 +1,4 @@
-const mongoose = require('../../database/index');
+import mongoose from '../../database/index.js';
 
 const Schema = mongoose.Schema;
 
@@ -28,4 +28,4 @@ const IncidentSchema = new mongoose.Schema({
 
 const Incident = mongoose.model('incident', IncidentSchema);
 
-module.exports = Incident;
+export default Incident;

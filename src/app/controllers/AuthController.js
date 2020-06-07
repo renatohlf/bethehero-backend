@@ -1,11 +1,11 @@
-const Ong = require('../models/ong');
-const User = require('../models/user');
-const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
-const { sendMail, generateToken } = require('../helpers/utils');
-const mongoose = require('mongoose');
+import Ong from '../models/ong.js';
+import User from '../models/user.js';
+import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+import { sendMail, generateToken } from '../helpers/utils.js';
+import mongoose from 'mongoose';
 
-module.exports = { 
+export default { 
     async register(request, response) {
         const { firstName, lastName, ongName, email, whatsapp, password, city, uf } = request.body;    
         const session = await mongoose.startSession();
@@ -13,45 +13,41 @@ module.exports = {
         if(await User.findOne({ email })) {
             return response.status(400).json({ error: 'User already exists'});
         }
-        await session.startTransaction();
+        
         try {
-           
+            await session.startTransaction();
             const user = await User.create([{
                 firstName,
                 lastName,
                 email,
                 phone: whatsapp,
                 password 
-            }], session);
-    
-            user[0].password = undefined;
-
-          
-            await Ong.create([{ 
-                name: ongName, 
-                user: user[0].id,
-                whatsapp, 
-                city, 
-                uf
-            }], session);
-           
-
+            }], session).then(async (user) => {
+                await Ong.create([{ 
+                    name: ongName, 
+                    user: user[0].id,
+                    whatsapp, 
+                    city, 
+                    uf
+                }], session);
+            });
+            // user[0].password = undefined;
+  
             sendMail({
                 to: email,
                 template: 'auth/confirm_registration',
                 subject: 'Confirm Registration',
                 context: { ongName, email }
             }).then(async () => {
-               
                 await session.commitTransaction();
                 session.endSession();
                 return response.send();
             }).catch(async (err) => {
                 await session.abortTransaction();
                 session.endSession();
-                return response.status(400).send({ error: 'Error sending email, try again later...'});
+                return response.status(400).send({ error: 'Error sending email, try again later...' });
             });
-           
+            
         } catch(err) {
             await session.abortTransaction();
             session.endSession();

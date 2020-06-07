@@ -1,7 +1,7 @@
-const mailer = require('../../modules/mailer');
-const jwt = require('jsonwebtoken');
+import mailer from '../../modules/mailer.js';
+import jwt from 'jsonwebtoken';
 
-function sendMail({to, template, subject, context}){
+export function sendMail({to, template, subject, context}){
     mailer.sendMail({
         from: 'noreply@bethehero.com',
         to,
@@ -10,15 +10,13 @@ function sendMail({to, template, subject, context}){
         context
     }, err => {
         if(err) {
-            return Promise.reject({ error: 'Error sending email, try again later...'});
+            return Promise.reject({ err });
         }
         return Promise.resolve();
     });
     return Promise.resolve();
 }
 
-function generateToken(params = {}) {
+export function generateToken(params = {}) {
     return jwt.sign(params, process.env.SECRET, { expiresIn: 86400 });
 }
-
-module.exports = { sendMail, generateToken }

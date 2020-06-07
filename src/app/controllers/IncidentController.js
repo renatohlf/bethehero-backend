@@ -1,7 +1,7 @@
-const Incident = require('../models/incident');
-const Ong = require('../models/ong');
+import Incident from '../models/incident.js';
+import Ong from '../models/ong.js';
 
-module.exports = { 
+export default { 
     async listIncidents(request, response) {
         const { page = 1 } = request.query;
         const limit = 2;

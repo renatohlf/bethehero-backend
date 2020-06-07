@@ -1,6 +1,6 @@
-const mockingoose = require('mockingoose').default;
-const Ong = require('../../src/app/models/ong');
-const User = require('../../src/app/models/user');
+import mockingoose from 'mockingoose';
+import Ong from '../../src/app/models/ong.js';
+import User from '../../src/app/models/user.js';
 
 describe('Ong test', () => {
     it('Should create an ONG', async () => {

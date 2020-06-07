@@ -1,5 +1,4 @@
-const mongoose = require('../../database/index');
-const bcrypt = require('bcryptjs');
+import mongoose from '../../database/index.js';
 
 const Schema = mongoose.Schema;
 
@@ -8,17 +7,6 @@ const OngSchema = new Schema({
         type: String,
         required: true,
     },
-    // email: {
-    //     type: String,
-    //     unique: true,
-    //     required: true,
-    //     lowercase: true       
-    // },
-    // password: {
-    //     type: String,
-    //     required: true,
-    //     select: false
-    // },
     whatsapp: {
         type: String,
     },
@@ -37,14 +25,6 @@ const OngSchema = new Schema({
         ref: 'user',
         required: true
     },
-    // passwordResetToken: {
-    //     type: String,
-    //     select: false
-    // },
-    // passwordResetExpires: {
-    //     type: Date,
-    //     select: false
-    // },
     createdAt: {
         type: Date,
         default: Date.now,
@@ -52,13 +32,7 @@ const OngSchema = new Schema({
     
 });
 
-// OngSchema.pre('save', async function(next) {
-//     const hash = await bcrypt.hash(this.password, 10);
-//     this.password = hash;
-
-//     next();
-// });
 
 const Ong = mongoose.model('ong', OngSchema);
 
-module.exports = Ong;
+export default Ong;
