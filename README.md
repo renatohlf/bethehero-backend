@@ -1,7 +1,6 @@
-# Address-book
+# BE THE HERO
 
-#### RESTful API in Node.js for an AddressBook
-
+#### RESTful API for a cross-platform system made for ONGs to register incidents and list them in a mobile app in order to find heroes who wants to help in their causes.
 
 
 ## Table of Contents
@@ -20,6 +19,7 @@
 
 ## Technologies
 - Node.js
+- Express
 - MongoDB
 - Mongoose
 - Jest
