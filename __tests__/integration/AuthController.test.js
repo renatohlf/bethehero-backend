@@ -9,7 +9,7 @@ setupDB();
 
 describe('Sign in', () => {
     it('Should register an user', async () => {
-        const response = await request.post('/register').send({
+        const response = await request.post('/signup').send({
             "ongName": "TEST",
             "email":"contato@test.com",
             "whatsapp": "",
@@ -27,7 +27,7 @@ describe('Sign in', () => {
     });
 
     it('Should Login', async () => {
-        await request.post('/register').send({
+        await request.post('/signup').send({
             "ongName": "TEST",
             "email":"contato@test.com",
             "whatsapp": "",
@@ -45,7 +45,7 @@ describe('Sign in', () => {
     });
 
     it('Should not login and return invalid password', async () => {
-        await request.post('/register').send({
+        await request.post('/signup').send({
             "ongName": "TEST",
             "email":"contato@test.com",
             "whatsapp": "",
@@ -64,7 +64,7 @@ describe('Sign in', () => {
     });
 
     it('Should not login and return user not found', async () => {
-        await request.post('/register').send({
+        await request.post('/signup').send({
             "ongName": "TEST",
             "email":"contato@test.com",
             "whatsapp": "",
@@ -83,7 +83,7 @@ describe('Sign in', () => {
     });
 
     it('Should send an email for "Lost password"', async () => {
-        await request.post('/register').send({
+        await request.post('/signup').send({
             "ongName": "TEST",
             "email":"contato@test.com",
             "whatsapp": "",
@@ -92,7 +92,7 @@ describe('Sign in', () => {
             "password": "12345"
         });
 
-        const response = await request.post('/lost_password').send({
+        const response = await request.post('/password/lost').send({
             "email":"contato@test.com",
         });
         

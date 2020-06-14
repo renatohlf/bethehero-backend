@@ -28,7 +28,10 @@ async function register(request, response) {
                 whatsapp, 
                 city, 
                 uf
-            }], session);
+            }], session)
+        }).catch(async (err) => {
+            await session.abortTransaction();
+            session.endSession();
         });
         // user[0].password = undefined;
 
@@ -48,6 +51,7 @@ async function register(request, response) {
         });
         
     } catch(err) {
+        console.log(err);
         await session.abortTransaction();
         session.endSession();
         return response.status(400).json({ error: 'Registration Failed'});

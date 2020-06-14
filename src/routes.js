@@ -10,9 +10,9 @@ const routes = express.Router();
 
 // Routes
 routes.post('/login', AuthController.login);
-routes.post('/register', AuthController.register);
-routes.post('/lost_password', AuthController.lostPassword);
-routes.post('/reset_password', AuthController.resetPassword);
+routes.post('/signup', AuthController.register);
+routes.post('/password/lost', AuthController.lostPassword);
+routes.post('/password/reset', AuthController.resetPassword);
 
 routes.get('/ongs', OngController.listOngs);
 routes.get('/ong', authenticated, OngController.getOng);

@@ -7,7 +7,7 @@ setupDB();
 describe('Test OngController', () => {
 
     it('should list ongs', async () => {
-        await request.post('/register').send({
+        await request.post('/signup').send({
             "ongName": "TEST55",
             "email":"contato1@ssss.com",
             "whatsapp": "",
@@ -16,7 +16,7 @@ describe('Test OngController', () => {
             "password": "13332"
         }).expect(200)
         .then(async (res) => {
-           return await request.post('/register').send({
+           return await request.post('/signup').send({
                 "ongName": "TEST2",
                 "email":"contato2@test2.com",
                 "whatsapp": "",
