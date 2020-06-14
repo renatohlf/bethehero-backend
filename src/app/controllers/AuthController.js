@@ -74,9 +74,19 @@ async function login(req, res) {
 
     user.password = undefined;
 
-    const token = generateToken({ id: user.id });
-
     const ong = await Ong.findOne({ user: user.id });
+
+    const token = generateToken({ 
+        id: user.id, 
+        email: user.email, 
+        name: user.name,
+        ong: { 
+            name: ong.name, 
+            whatsapp: ong.whatsapp, 
+            city: ong.city, 
+            uf: ong.uf 
+        } 
+    });
 
     return res.send({ userId: user.id, ong, token });
 }
